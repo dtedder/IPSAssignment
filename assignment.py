@@ -23,6 +23,11 @@ class PositionFile:
 		df = None
 		df = read_csv(path_to_csv)
 
+		# ensure the required columns are present
+		if len({"t","x","y"}.difference(df.columns)) != 0:
+			logging.error("required columns not present")
+			return
+
 		# index the positions by their time as position objects
 		self.positions = {}
 		for f in range(len(df)):
@@ -91,7 +96,7 @@ class ReadingFile:
 		self.readings = dict([(df["t"][f], Reading(df["t"][f], df["accuracy"][f])) for f in range(len(df))])
 
 
-def perform_tasks():
+def main():
 	# verify command line parameters
 	arg_parser = ArgumentParser(description="Processes a set of IPS recording files into a grid and completes tasks for the assignment")
 	arg_parser.add_argument("mag_csv", help="full path to the csv file for the magnetics recording")
@@ -113,4 +118,4 @@ if __name__ == "__main__":
 	stream_handler.setLevel(logging.INFO)
 	logger.addHandler(stream_handler)
 	logger.setLevel(logging.INFO)
-	perform_tasks()
+	main()
