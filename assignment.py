@@ -126,13 +126,15 @@ class ReadingFile:
 		size_bin = len(self.bins[bin_id]) if bin_id in self.bins else 0
 		if size_bin < 1:
 			return "  "
-		if size_bin < 10:
-			return " ."
+		if size_bin < 25:
+			return " 1"
 		if size_bin < 50:
-			return " *"
+			return " 2"
 		if size_bin < 100:
-			return " 0"
-		return " X"
+			return " 3"
+		if size_bin < 150:
+			return " 4"
+		return " 5"
 
 	def plot_bins(self):
 		print(f"+{(self.max_col + 1) * 2 * '-'}+")
