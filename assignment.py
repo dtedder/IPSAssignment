@@ -67,7 +67,7 @@ class Reading:
 		# check for out of bounds
 		if self.log_time < pf.ordered_times[0] or self.log_time > pf.ordered_times[-1]:
 			logging.error(f"unable to locate: {self.log_time}, out of bounds")
-			return None
+			return
 
 		# check for end coincident points
 		for f in [0, -1]:
@@ -135,14 +135,14 @@ class ReadingFile:
 		return " X"
 
 	def plot_bins(self):
-		print(f"+{(self.max_col) * 2 * '-'}+")
-		for row in range(self.max_row, 0, -1):
+		print(f"+{(self.max_col + 1) * 2 * '-'}+")
+		for row in range(self.max_row, -1, -1):
 			grid_line = "|"
-			for col in range(self.max_col):
+			for col in range(self.max_col + 1):
 				grid_line = "{}{}".format(grid_line, self.get_symbol_for_bin_id(f"{row}_{col}"))
 			grid_line = f"{grid_line}|"
 			print(grid_line)
-		print(f"+{(self.max_col) * 2 * '-'}+")
+		print(f"+{(self.max_col + 1) * 2 * '-'}+")
 
 def main(cell_size=5):
 	# verify command line parameters
